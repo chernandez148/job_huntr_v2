@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import logo from '../../assets/logo.png';
 import { CgMenuRight } from 'react-icons/cg';
-import { GrFormSearch } from 'react-icons/gr';
 import { MdLocationPin } from 'react-icons/md';
+import { GrFormSearch } from 'react-icons/gr';
 import { PiUserCircle } from 'react-icons/pi';
 import { BiSearchAlt2 } from 'react-icons/bi';
 import { IoIosOptions } from 'react-icons/io';
