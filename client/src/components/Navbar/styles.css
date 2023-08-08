@@ -1,0 +1,187 @@
+.Navbar {
+    padding: 1rem;
+    box-shadow: 0 0 10px #00000029;
+}
+
+.nav-list {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-center form {
+    display: none;
+}
+
+.nav-link {
+    display: none;
+}
+
+.mobile-form {
+    display: flex;
+    flex-direction: column;
+    padding: .5rem 3rem 0 3rem;
+}
+
+.mobile-form input {
+    padding: .5rem;
+    border: 0;
+    border-radius: 20px;
+}
+
+.mobile-search-job,
+.mobile-search-location {
+    box-shadow: 0px 0px 4px #0000002b;
+    margin-bottom: 0.5rem;
+    display: flex;
+    flex: 1 1;
+    border-radius: 20px;
+}
+
+.mobile-search-job input,
+.mobile-search-location input {
+    flex: 1;
+}
+
+.mobile-search-job button,
+.mobile-search-location button {
+    background-color: transparent;
+    border: 0;
+}
+
+.nav-link button {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    border-radius: 20px;
+    background: #eb4a6d;
+    border: 0;
+    color: white;
+}
+
+.user-icon {
+    padding-right: .5rem;
+    font-size: 20px;
+}
+
+.mobile-input-wrapper {
+    background: white;
+    z-index: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.mobile-input-wrapper input:focus {
+    outline: none;
+}
+
+.mobile-filter-form-hide {
+    position: absolute;
+    opacity: 0;
+    bottom: 85px;
+    z-index: 0;
+    transition: bottom .5s ease-in-out;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.mobile-filter-form-show {
+    position: relative;
+    bottom: 0;
+    z-index: 0;
+    display: flex;
+    flex-wrap: wrap;
+    transition: bottom .5s ease-in-out;
+
+}
+
+.mobile-filter-form-hide select,
+.mobile-filter-form-show select {
+    margin: 0.25rem;
+    padding: 0.5rem;
+    background: #f1f1f1;
+    border: 0;
+    border-radius: 7px;
+}
+
+.mobile-filter-form-hide select::after,
+.mobile-filter-form-show select::after {
+    padding: .25rem;
+}
+
+@media screen and (min-width: 700px) {
+    .nav-list {
+        justify-content: space-around;
+        align-items: flex-start;
+    }
+
+    .mobile-form {
+        display: none;
+    }
+
+    .hamburger {
+        display: none;
+    }
+
+    .nav-center form {
+        display: flex;
+        flex-direction: column;
+        margin: 0 1rem;
+    }
+
+    .nav-link {
+        display: flex;
+    }
+
+    .search-form {
+        display: flex;
+        box-shadow: 0px 0px 4px #0000002b;
+        margin-bottom: .75rem;
+    }
+
+    .search-job,
+    .search-location {
+        display: flex;
+        align-items: center;
+        flex: 1;
+    }
+
+    .search-job label {
+        padding-left: .5rem;
+    }
+
+    .search-job input,
+    .search-location input {
+        border: 0;
+        flex: 1;
+        padding: .5rem
+    }
+
+    .submit-btn {
+        padding: 0.5rem;
+        border: 0;
+        background-color: transparent;
+        color: #e34a6a;
+    }
+
+    .filter-form {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .filter-form select {
+        margin: 0.25rem;
+        padding: 0.5rem;
+        background: #f1f1f1;
+        border: 0;
+        border-radius: 7px;
+    }
+
+    .filter-form select::after {
+        padding: .25rem;
+    }
+}
