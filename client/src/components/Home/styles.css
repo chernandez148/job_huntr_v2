@@ -1,86 +1,85 @@
-.Home {
-    display: flex;
-    padding: 1.5rem 0;
-    flex-wrap: wrap;
-    flex-direction: column;
-}
-
-.saftey-tips {
-    margin: 0 1rem;
-}
-
-.saftey-tips h5 {
-    text-align: start;
-    margin: 1rem 0.5rem;
-}
+.Home {}
 
 .saftey-tips-wrapper {
     display: flex;
+    flex-wrap: wrap;
+    margin: 0 1rem;
     justify-content: center;
+
 }
 
 .saftey-tip-card {
-    margin: 0.5rem;
+    background-color: #f9f9f9;
+    margin: .5rem;
     padding: 1rem;
-    background-color: #f1f1f1;
-    flex: .5;
-    border-radius: 5px;
-    transition: background-color .25s ease-in-out;
-}
-
-.saftey-tip-card:hover {
-    cursor: pointer;
-    background-color: #d9d9d9;
+    display: flex;
+    width: 100%;
 }
 
 .saftey-tip-card-wrapper {
     display: flex;
     align-items: center;
+    flex: 1;
     justify-content: space-between;
 }
 
 .saftey-text {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
 }
 
 .saftey-text p {
+    margin: 0;
+    font-size: 14px;
     font-weight: 500;
     text-align: start;
-    font-size: 14px;
-    margin: 0;
 }
 
 .saftey-text span {
-    margin-top: .75rem;
-    text-align: start;
+    margin: .5rem 0;
     font-size: 14px;
-}
-
-.job-feed {
-    flex: 1;
 }
 
 .job-desc {
     display: none;
 }
 
-@media screen and (min-width: 700px) {
+.job-info {
+    display: flex;
+    justify-content: center;
+}
+
+@media screen and (min-width: 1700px) {
     .Home {
         width: 60%;
         margin: 0 auto;
     }
+}
 
-    .job-info {
-        display: flex;
+@media screen and (min-width: 700px) {
+    .saftey-tip-card {
+        width: 20%;
     }
 
-    .job-feed,
     .job-desc {
+        display: initial;
+    }
+
+    .job-desc,
+    .job-feed {
         flex: .5;
     }
+}
 
-    .job-desc {
-        display: block;
+@media screen and (max-width: 850px) {
+    .saftey-tip-card {
+        width: 40%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .saftey-tip-card {
+        width: 100%;
     }
 }

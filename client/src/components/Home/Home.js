@@ -1,6 +1,8 @@
 import React from 'react'
 import shield from '../../assets/antivirus.png'
 import resume from '../../assets/resume.png'
+import bookmark from '../../assets/bookmark.jpg'
+import filter from '../../assets/filter.png'
 import './styles.css'
 
 function Home() {
@@ -12,7 +14,7 @@ function Home() {
                     <div className='saftey-tip-card'>
                         <div className='saftey-tip-card-wrapper'>
                             <div className='saftey-text'>
-                                <p>Stay safe from fraudalent activity when applying</p>
+                                <p>Stay safe from fraudalent posts when applying</p>
                                 <span>Read more</span>
                             </div>
                             <img src={shield} width="40px" height="40px" />
@@ -25,6 +27,24 @@ function Home() {
                                 <span>Read more</span>
                             </div>
                             <img src={resume} width="40px" height="40px" />
+                        </div>
+                    </div>
+                    <div className='saftey-tip-card'>
+                        <div className='saftey-tip-card-wrapper'>
+                            <div className='saftey-text'>
+                                <p>Never lose a job posting, use the bookmark</p>
+                                <span>Read more</span>
+                            </div>
+                            <img src={bookmark} width="60px" height="60px" />
+                        </div>
+                    </div>
+                    <div className='saftey-tip-card'>
+                        <div className='saftey-tip-card-wrapper'>
+                            <div className='saftey-text'>
+                                <p>Use the filter option for specific searches</p>
+                                <span>Read more</span>
+                            </div>
+                            <img src={filter} width="40px" height="40px" />
                         </div>
                     </div>
                 </div>
