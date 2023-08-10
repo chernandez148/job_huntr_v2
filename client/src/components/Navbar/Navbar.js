@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import logo from '../../assets/logo.png';
+import { useDispatch, useSelector } from 'react-redux'
+import { setLoginForm } from '../../redux/slices/loginForm';
 import { CgMenuRight } from 'react-icons/cg';
 import { MdLocationPin } from 'react-icons/md';
 import { GrFormSearch } from 'react-icons/gr';
@@ -8,10 +9,14 @@ import { BiSearchAlt2 } from 'react-icons/bi';
 import { IoIosOptions } from 'react-icons/io';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import LoginForm from './LoginForm/LoginForm';
+import logo from '../../assets/logo.png';
 import './styles.css';
 
 function Navbar() {
     const [mobileOptions, setMobileOptions] = useState(false)
+    const loginForm = useSelector(state => state.loginForm.loginForm);
+    const dispatch = useDispatch()
 
     const handleMobileOptions = (e) => {
         e.preventDefault()
@@ -43,6 +48,10 @@ function Navbar() {
             console.log(values)
         }
     });
+
+    const handleLoginForm = () => {
+        dispatch(setLoginForm(!loginForm))
+    }
 
     const toggleOptions = mobileOptions ? "mobile-filter-form-show" : "mobile-filter-form-hide"
 
@@ -142,10 +151,11 @@ function Navbar() {
                     </form>
                 </div>
                 <div className='nav-right'>
-                    <li className='nav-link'><button><PiUserCircle className='user-icon' />Sign In</button></li>
+                    <li className='nav-link'><button onClick={handleLoginForm}><PiUserCircle className='user-icon' />Sign In</button></li>
                     <li className='hamburger'><CgMenuRight /></li>
                 </div>
             </ul>
+            {loginForm && <div className='login-form'><LoginForm /></div>}
             <form className='mobile-form' onSubmit={formik.handleSubmit}>
                 <div className='mobile-input-wrapper'>
                     <div className='mobile-search-job'>
@@ -230,7 +240,6 @@ function Navbar() {
                         <option value="100">100 Miles</option>
                     </select>
                 </div>
-
             </form>
         </nav>
     )

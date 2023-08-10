@@ -1,0 +1,65 @@
+.NearbyJobs {
+    margin-top: 1.5rem;
+}
+
+.NearbyJobs a {
+    padding-top: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.nearby-job-list {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+.nearby-job-list:hover {
+    cursor: pointer;
+}
+
+.nearby-job-list:first-child {
+    border-top: 1px solid #e3e3e3;
+
+}
+
+.nearby-job-card {
+    padding: 1rem 0;
+}
+
+
+
+.job-title {
+    padding: 0 !important;
+    font-weight: 600;
+    color: #3b3b3bed;
+    font-size: 15px;
+}
+
+.employer-name {
+    padding: 0 !important;
+    font-weight: 400;
+    margin: .25rem 0 !important;
+}
+
+.job-city {
+    margin-bottom: .25rem !important;
+}
+
+.job-city,
+.job-salary {
+    padding: 0 !important;
+    margin: 0;
+    font-size: 14px;
+    font-weight: 400;
+    color: #4f4f4f;
+}
+
+.bookmark-icon {
+    background-color: transparent;
+    border: 0;
+}
+
+.bookmark-icon:hover {
+    cursor: pointer;
+}

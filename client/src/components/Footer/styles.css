@@ -1,0 +1,18 @@
+.Footer {
+    padding: 1.5rem;
+    border-top: 1px solid #e3e3e3;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.footer-navbar {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.footer-navbar a {
+    margin: 0 .5rem;
+    text-decoration: none;
+}

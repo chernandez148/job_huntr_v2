@@ -20,6 +20,20 @@
     display: none;
 }
 
+.nav-link button:hover {
+    cursor: pointer;
+}
+
+.login-form {
+    display: none;
+    position: absolute;
+    right: 0;
+    margin-right: 3rem;
+    padding: 1.5rem;
+    box-shadow: 0 0 10px #00000029;
+    background-color: white;
+}
+
 .mobile-form {
     display: flex;
     flex-direction: column;
@@ -117,6 +131,10 @@
     .nav-list {
         justify-content: space-around;
         align-items: flex-start;
+    }
+
+    .login-form {
+        display: block;
     }
 
     .mobile-form {

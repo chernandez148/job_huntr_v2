@@ -1,5 +1,3 @@
-.Home {}
-
 .saftey-tips-wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -14,6 +12,7 @@
     padding: 1rem;
     display: flex;
     width: 100%;
+    border-top: 3px solid #e34a6a;
 }
 
 .saftey-tip-card-wrapper {
@@ -41,13 +40,89 @@
     font-size: 14px;
 }
 
-.job-desc {
-    display: none;
+.user-feed,
+.job-feed {
+    flex: .5;
+    text-align: start;
 }
 
-.job-info {
+.job-feed .nearby-jobs,
+.job-feed .remote-oppertunities,
+.user-feed .saved-jobs,
+.user-feed .recent-search {
+    margin: 1rem;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    border: 1px solid #efefef;
+}
+
+.user-feed .job-huntr-app {
+    margin: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    border: 1px solid #efefef;
+}
+
+.job-feed h4 {
+    margin: 0;
+    padding: .5rem .25rem .25rem .25rem;
+}
+
+.job-feed p {
+    margin: 0;
+    padding: 0 .25rem;
+    font-size: 14px;
+    color: #7f7f7f;
+}
+
+.saved-job-header-wrapper,
+.recent-search-header-wrapper,
+.job-huntr-app-wrapper {
     display: flex;
-    justify-content: center;
+    align-items: center;
+}
+
+.job-huntr-app-wrapper {
+    padding: 1rem 0 0 1rem;
+}
+
+.saved-job-header-wrapper h4,
+.recent-search-header-wrapper h4,
+.job-huntr-app-wrapper h4 {
+    padding: 0.5rem 0.25rem 0.25rem 0.25rem;
+    margin: 0;
+}
+
+.saved-jobs p,
+.recent-search p,
+.job-huntr-app p {
+    margin: 0;
+    padding: 0 .25rem;
+    font-size: 14px;
+    color: #7f7f7f;
+}
+
+.job-huntr-app p {
+    padding-left: 1rem;
+    padding-bottom: 1rem;
+}
+
+.job-huntr-app .app-wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 1rem;
+    background: #f1f1f1;
+}
+
+.app-title h4 {
+    margin-bottom: .25rem;
+}
+
+.app-title p {
+    padding: 0;
+    font-size: 14px;
 }
 
 @media screen and (min-width: 1700px) {
@@ -58,18 +133,23 @@
 }
 
 @media screen and (min-width: 700px) {
-    .saftey-tip-card {
-        width: 20%;
+    .saftey-tips-wrapper {
+        margin: 0;
     }
 
-    .job-desc {
+    .saftey-tip-card {
+        flex: .25;
+    }
+
+    .job-info {
+        display: flex;
+        justify-content: center;
+    }
+
+    .user-feed {
         display: initial;
     }
 
-    .job-desc,
-    .job-feed {
-        flex: .5;
-    }
 }
 
 @media screen and (max-width: 850px) {
