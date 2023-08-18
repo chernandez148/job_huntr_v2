@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import { setLoginForm } from '../../redux/slices/loginForm';
+import { setSearchedJobData } from '../../redux/slices/searchedJobData';
+import { setIsLoading } from '../../redux/slices/isLoading';
 import { CgMenuRight } from 'react-icons/cg';
 import { MdLocationPin } from 'react-icons/md';
 import { GrFormSearch } from 'react-icons/gr';
@@ -9,26 +12,60 @@ import { BiSearchAlt2 } from 'react-icons/bi';
 import { IoIosOptions } from 'react-icons/io';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import axios from 'axios';
 import LoginForm from './LoginForm/LoginForm';
+import UserNavbar from './UserNavbar/UserNavbar';
 import logo from '../../assets/logo.png';
 import './styles.css';
 
 function Navbar() {
     const [mobileOptions, setMobileOptions] = useState(false)
     const loginForm = useSelector(state => state.loginForm.loginForm);
+    const user = useSelector(state => state.user.user);
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const handleMobileOptions = (e) => {
         e.preventDefault()
         setMobileOptions(mobileOptions => (!mobileOptions))
     }
 
+    const handleRecentSearch = async (values) => {
+        const recentSavesUrl = "http://127.0.0.1:5000/recent_searches";
+
+        try {
+            const response = await fetch(recentSavesUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    job_search: values.jobSearch,
+                    location_search: values.locationSearch,
+                    date_posted: values.datePosted,
+                    remote: values.remote,
+                    experience: values.experience,
+                    radius: values.radius,
+                    user_id: user.id,
+                }),
+            });
+
+            if (response.ok) {
+                const recentSearch = await response.json();
+                console.log(recentSearch);
+            } else {
+                console.error("Failed to add job to favorites.");
+            }
+        } catch (error) {
+            console.error("An error occurred while adding to recent searches:", error);
+        }
+    };
+
     const schema = yup.object().shape({
         jobSearch: yup.string(),
         locationSearch: yup.string(),
         datePosted: yup.string(),
         remote: yup.string(),
-        employmentType: yup.string(),
         experience: yup.string(),
         radius: yup.string(),
     });
@@ -39,13 +76,49 @@ function Navbar() {
             locationSearch: "",
             datePosted: "",
             remote: "",
-            employmentType: "",
             experience: "",
             radius: "",
         },
         validationSchema: schema,
-        onSubmit: (values) => {
-            console.log(values)
+        onSubmit: async (values) => {
+            dispatch(setIsLoading(true))
+
+            if (user) {
+                await handleRecentSearch(values);
+            }
+
+            console.log(true)
+            if (values) {
+                const options = {
+                    method: "GET",
+                    url: "https://jsearch.p.rapidapi.com/search",
+                    params: {
+                        query: `${values.jobSearch} in ${values.locationSearch}, USA`,
+                        page: "3",
+                        num_pages: "20",
+                        date_posted: values.datePosted ? `${values.datePosted}` : null,
+                        remote_jobs_only: values.remote ? `${values.remote}` : null,
+                        job_requirements: values.experience ? `${values.experience}` : null,
+                        radius: values.radius ? `${values.radius}` : null,
+                    },
+                    headers: {
+                        'X-RapidAPI-Key': 'KJwZZIJSFimshuivMSVGaiYzkRomp15f2vKjsnK4bKzuUzVLzA',
+                        'X-RapidAPI-Host': 'jsearch.p.rapidapi.com',
+                    },
+                };
+
+                try {
+                    const response = await axios.request(options);
+                    dispatch(setSearchedJobData(response.data))
+                    dispatch(setIsLoading(false))
+                    console.log(false)
+                    navigate('/search_results')
+                } catch (error) {
+                    console.error(error)
+                }
+            } else {
+                console.log('Please enter both job search and location.');
+            }
         }
     });
 
@@ -60,7 +133,7 @@ function Navbar() {
             <ul className='nav-list'>
                 <div className='nav-left'>
                     <li>
-                        <img src={logo} width="125px" />
+                        <Link to='/'><img src={logo} width="125px" /></Link>
                     </li>
                 </div>
                 <div className='nav-center'>
@@ -111,27 +184,15 @@ function Navbar() {
                                 <option value="no">No</option>
                             </select>
                             <select
-                                name='employmentType'
-                                onChange={formik.handleChange}
-                                value={formik.values.employmentType}
-                            >
-                                <option value="" disabled>Employment Type</option>
-                                <option value="full-time">Full-Time</option>
-                                <option value="part-time">Part-Time</option>
-                                <option value="contractor">Contractor</option>
-                                <option value="intern">Intern</option>
-                                <option value="per-diem">Per-Diem</option>
-                            </select>
-                            <select
                                 name='experience'
                                 onChange={formik.handleChange}
                                 value={formik.values.experience}
                             >
                                 <option value="" disabled>Experience</option>
-                                <option value="no-experience">No Experience</option>
-                                <option value="entry-level">Entry Level</option>
-                                <option value="mid-level">Mid Level</option>
-                                <option value="serior-level">Senior Level</option>
+                                <option value="no_experience">No Experience</option>
+                                <option value="under_3_years_experience">Entry Level</option>
+                                <option value="more_than_3_years_experience">Mid Level</option>
+                                <option value="more_than_3_years_experience">Senior Level</option>
                             </select>
                             <select
                                 name='radius'
@@ -151,11 +212,11 @@ function Navbar() {
                     </form>
                 </div>
                 <div className='nav-right'>
-                    <li className='nav-link'><button onClick={handleLoginForm}><PiUserCircle className='user-icon' />Sign In</button></li>
+                    <li className='nav-link'><button onClick={handleLoginForm}><PiUserCircle className='user-icon' />{user ? " User" : "Sign In"}</button></li>
                     <li className='hamburger'><CgMenuRight /></li>
                 </div>
             </ul>
-            {loginForm && <div className='login-form'><LoginForm /></div>}
+            <div className={`login-form ${loginForm ? "login-form-show" : "login-form-hide"}`}>{user ? <UserNavbar /> : <LoginForm />}</div>
             <form className='mobile-form' onSubmit={formik.handleSubmit}>
                 <div className='mobile-input-wrapper'>
                     <div className='mobile-search-job'>
@@ -176,7 +237,7 @@ function Navbar() {
                             onChange={formik.handleChange}
                             value={formik.values.locationSearch}
                         />
-                        <button className='submit-btn'><BiSearchAlt2 /></button>
+                        <button type='click' className='submit-btn'><BiSearchAlt2 /></button>
                     </div>
                 </div>
 
@@ -208,11 +269,10 @@ function Navbar() {
                         value={formik.values.employmentType}
                     >
                         <option value="" disabled>Employment Type</option>
-                        <option value="full-time">Full-Time</option>
-                        <option value="part-time">Part-Time</option>
-                        <option value="contractor">Contractor</option>
-                        <option value="intern">Intern</option>
-                        <option value="per-diem">Per-Diem</option>
+                        <option value="FULLTIME">Full-Time</option>
+                        <option value="PARTTIME">Part-Time</option>
+                        <option value="CONTRACTOR">Contractor</option>
+                        <option value="INTERN">Intern</option>
                     </select>
                     <select
                         name='experience'
@@ -220,10 +280,10 @@ function Navbar() {
                         value={formik.values.experience}
                     >
                         <option value="" disabled>Experience</option>
-                        <option value="no-experience">No Experience</option>
-                        <option value="entry-level">Entry Level</option>
-                        <option value="mid-level">Mid Level</option>
-                        <option value="serior-level">Senior Level</option>
+                        <option value="no_experience">No Experience</option>
+                        <option value="under_3_years_experience">Entry Level</option>
+                        <option value="more_than_3_years_experience">Mid Level</option>
+                        <option value="more_than_3_years_experience">Senior Level</option>
                     </select>
                     <select
                         name='radius'

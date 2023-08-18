@@ -1,0 +1,159 @@
+.SearchResults {
+    display: flex;
+    margin: 0 1rem;
+}
+
+.search-query {
+    padding: 1rem;
+    background: linear-gradient(45deg, #e34a6a, #f1768a);
+    position: sticky;
+    top: 0;
+}
+
+.searched-job-details {
+    display: none;
+}
+
+.search-results {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    border: 1px solid lightgrey;
+    border-bottom: 0;
+}
+
+.search-result-header {
+    font-weight: 500;
+    color: white;
+    font-size: 15px;
+    margin: 0;
+    width: 100%;
+}
+
+.search-job-card {
+    padding: 0.5rem;
+    border-bottom: 1px solid lightgrey;
+    display: flex;
+    justify-content: space-between;
+}
+
+.search-job-card:hover {
+    cursor: pointer;
+    background-color: rgb(250, 250, 250);
+}
+
+.search-job-card h4 {
+    margin: 0;
+    font-weight: 600;
+    color: #393939;
+}
+
+.search-job-card p {
+    margin: 0;
+    font-size: 12px;
+}
+
+.emplyer-name {
+    margin: .5rem 0 !important;
+}
+
+.job_salary {
+    margin: .5rem 0 !important;
+}
+
+.load-more-btn {
+    padding: .75rem;
+    border: 0;
+    background-color: transparent;
+}
+
+.bookmark-btn {
+    border: 0;
+    background-color: transparent;
+}
+
+.searched-job-details-wrapper {
+    padding: 1.5rem;
+    padding-right: 0;
+    position: sticky;
+    top: 0;
+}
+
+.searched-info {
+    position: sticky;
+    top: 0;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.searched-info h3,
+.searched-info h5 {
+    margin: 0;
+}
+
+.searched-info h5 {
+    font-weight: 400;
+}
+
+.selected-employer {
+    margin-top: .75rem !important;
+}
+
+.employment-type {
+    margin: 1rem 0 !important;
+    display: flex;
+    align-items: center;
+}
+
+.job-icon {
+    font-size: 16px;
+    margin-right: .25rem;
+}
+
+.apply-link {
+    text-decoration: none;
+    font-size: 14px;
+    background: linear-gradient(45deg, #e34a6a, #f1768a);
+    padding: .5rem 1rem;
+    border-radius: 20px;
+    color: white;
+    border: 0;
+}
+
+.searched-info hr {
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.wrapper-info {
+    display: flex;
+}
+
+@media screen and (min-width: 1000px) {
+    .SearchResults {
+        width: 950px !important;
+    }
+}
+
+@media screen and (min-width: 700px) {
+    .SearchResults {
+        width: 98%;
+        margin: 0 auto;
+    }
+
+    .search-results {
+        flex: .5;
+    }
+
+    .searched-job-details {
+        justify-content: flex-start;
+        display: flex;
+        flex: .5 1;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        border-right: 1px solid lightgrey;
+
+    }
+}

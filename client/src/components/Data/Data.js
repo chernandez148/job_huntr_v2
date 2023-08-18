@@ -7,6 +7,10 @@ import axios from 'axios';
 
 function Data() {
     const locationData = useSelector(state => state.locationData.locationData);
+    const newFavoriteJobData = useSelector(state => state.newFavoriteJobData.newFavoriteJobData);
+    const user = useSelector(state => state.user.user);
+    console.log(newFavoriteJobData)
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -104,6 +108,27 @@ function Data() {
             fetchRemoteJobData();
         }
     }, [dispatch, locationData]);
+
+    // useEffect(() => {
+    //     // Fetch job data only if locationData is available
+    //     if (user) {
+    //         const fetchSavedJobsData = async () => {
+    //             const savedJobsOptions = {
+    //                 method: 'GET',
+    //                 url: 'Running on http://127.0.0.1:5000/favorites',
+    //             };
+
+    //             try {
+    //                 const response = await axios.request(savedJobsOptions);
+    //                 dispatch(setFavoriteJobData([response.data]));
+    //             } catch (error) {
+    //                 console.error(error);
+    //             }
+    //         };
+
+    //         fetchSavedJobsData();
+    //     }
+    // }, [dispatch, user]);
 
     return null;
 }

@@ -4,7 +4,7 @@
 # Standard library imports
 
 # Remote library imports
-from flask import request, session, make_response, jsonify, abort
+from flask import request, session, make_response, jsonify
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 from flask_bcrypt import Bcrypt
@@ -13,7 +13,7 @@ import requests
 # Local imports
 from config import app, db, api, CORS
 
-from models import User, Favorite
+from models import User, Favorite, RecentSearch
 
 class Users(Resource):
     # Retrieves all users 
@@ -86,7 +86,7 @@ class Login(Resource):
 
         if check_user and check_user.authenticate(password):
             session['user_id'] = check_user.id
-            response_data = check_user.to_dict()
+            response_data = check_user.to_dict(rules=('favorited_jobs', 'recent_searches'))
             return make_response(response_data, 200)
         
         return {'error': 'Unauthorized'}, 401
@@ -142,58 +142,51 @@ class Signup(Resource):
 api.add_resource(Signup, '/signup')
 
 class Favorites(Resource):
-    # Saves a job to a favorite list
     def post(self):
         request_json = request.get_json()
-        employer_logo = request_json.get('employer_logo')
-        job_title = request_json.get('job_title')
-        employer_name = request_json.get('employer_name')
-        job_city = request_json.get('job_city')
-        job_state = request_json.get('job_state')
-        job_min_salary = request_json.get('job_min_salary')
-        job_max_salary = request_json.get('job_max_salary')
-        job_employment_type = request_json.get('job_employment_type')
-        job_apply_link = request_json.get('job_apply_link')
-        job_description = request_json.get('job_description')
-        job_qualifications = request_json.get('job_qualifications')
-        job_responsibilities = request_json.get('job_responsibilities')
-        job_benefits = request_json.get('job_benefits')
         job_id = request_json.get('job_id')
         user_id = request_json.get('user_id')
 
+        # Check if the job is already favorited by the user
+        existing_favorite = Favorite.query.filter_by(job_id=job_id, user_id=user_id).first()
+        if existing_favorite:
+            return make_response({"error": "Job already saved"}, 400)  # Use 400 for bad request
+        
+        # If the job is not already favorited, proceed to create the favorite entry
         new_favorite = Favorite(
-            employer_logo=employer_logo,
-            job_title = job_title,
-            employer_name = employer_name,
-            job_city = job_city,
-            job_state = job_state,
-            job_min_salary = job_min_salary,
-            job_max_salary = job_max_salary,
-            job_employment_type = job_employment_type,
-            job_apply_link = job_apply_link,
-            job_description = job_description,
-            job_qualifications = job_qualifications,
-            job_responsibilities = job_responsibilities,
-            job_benefits = job_benefits,
-            job_id = job_id,
-            user_id = user_id
+            employer_logo=request_json.get('employer_logo'),
+            job_title=request_json.get('job_title'),
+            employer_name=request_json.get('employer_name'),
+            job_city=request_json.get('job_city'),
+            job_state=request_json.get('job_state'),
+            job_min_salary=request_json.get('job_min_salary'),
+            job_max_salary=request_json.get('job_max_salary'),
+            job_employment_type=request_json.get('job_employment_type'),
+            job_apply_link=request_json.get('job_apply_link'),
+            job_description=request_json.get('job_description'),
+            job_qualifications=request_json.get('job_qualifications'),
+            job_responsibilities=request_json.get('job_responsibilities'),
+            job_benefits=request_json.get('job_benefits'),
+            job_id=job_id,
+            user_id=user_id
         )
 
         try: 
             db.session.add(new_favorite)
             db.session.commit()
-            return make_response(new_favorite.to_dict(), 200)
+            return make_response(new_favorite.to_dict(), 201)  # Use 201 for created
         
         except Exception as e:
             print(e)
-            return make_response({'error': 'Unprocessable Entity'}, 404)
-        
+            return make_response({'error': 'Unprocessable Entity'}, 500)  # Use 500 for server error
+
     def get(self):
         # Retrieves all favorite jobs
         favorites = [favorites.to_dict() for favorites in Favorite.query.all()]
         return make_response(jsonify(favorites), 200)
 
 api.add_resource(Favorites, '/favorites')
+
 
 class FavoritesByID(Resource):
     def delete(self, id):
@@ -205,6 +198,31 @@ class FavoritesByID(Resource):
         return make_response({"message": "Favorite successfully deleted"}, 200)
     
 api.add_resource(FavoritesByID, '/favorites/<int:id>')
+
+class RecentSearches(Resource):
+    def post(self):
+
+        request_json = request.get_json()
+        recent_search = RecentSearch(
+            job_search = request_json.get('job_search'),
+            location_search = request_json.get('location_search'),
+            date_posted = request_json.get('date_posted'),
+            remote = request_json.get('remote'),
+            experience = request_json.get('experience'),
+            radius = request_json.get('radius'),
+            user_id = request_json.get('user_id')
+        )
+
+        try: 
+            db.session.add(recent_search)
+            db.session.commit()
+            return make_response(recent_search.to_dict(), 201)  # Use 201 for created
+        
+        except Exception as e:
+            print(e)
+            return make_response({'error': 'Unprocessable Entity'}, 500)  # Use 500 for server error
+
+api.add_resource(RecentSearches, '/recent_searches')
 
 if __name__ == '__main__':
     app.run(port=5000, host="0.0.0.0", debug=True)

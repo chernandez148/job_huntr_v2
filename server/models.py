@@ -29,6 +29,7 @@ class User(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     favorited_jobs = db.relationship('Favorite', backref='user')
+    recent_searches = db.relationship('RecentSearch', backref='user')
 
     @hybrid_property
     def password_hash(self):
@@ -43,7 +44,7 @@ class User(db.Model, SerializerMixin):
     def authenticate(self, password):
         return bcrypt.check_password_hash(self._password_hash, password.encode('utf-8'))
     
-    serialize_rules = ('-created_at', '-updated_at', '-favorited_jobs')
+    serialize_rules = ('-created_at', '-updated_at', '-favorited_jobs', '-recent_searches')
 
 class Favorite(db.Model, SerializerMixin):
     __tablename__ = "favorited_jobs"
@@ -66,6 +67,24 @@ class Favorite(db.Model, SerializerMixin):
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+
+    serialize_rules = ('-created_at', '-updated_at', '-user_id')
+
+class RecentSearch(db.Model, SerializerMixin):
+    __tablename__ = "recent_searches"
+
+    id = db.Column(db.Integer, primary_key=True)
+    job_search = db.Column(db.String)
+    location_search = db.Column(db.String)
+    date_posted = db.Column(db.String)
+    remote = db.Column(db.String)
+    experience = db.Column(db.String)
+    radius = db.Column(db.String)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 

@@ -1,0 +1,80 @@
+@media screen and (min-width: 700px) {
+    .UserNavbar {
+        position: absolute;
+        right: 0;
+        width: 350px;
+        height: 100%;
+        background-color: white;
+    }
+
+    .UserNavbarShow {
+        opacity: 1;
+        z-index: 1;
+        transition: opacity 0.5s ease-in-out, z-index 0.5s linear;
+    }
+
+    .UserNavbarHide {
+        opacity: 0;
+        z-index: -1;
+        transition: opacity 0.5s ease-in-out, z-index 0.5s linear 0.5s;
+    }
+
+    .close-user-navbar {
+        display: flex;
+        margin: 1rem;
+        border: 0;
+        background-color: transparent;
+        float: right;
+    }
+
+    .close-user-navbar:hover {
+        cursor: pointer;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        padding-top: 3rem;
+    }
+
+    .user-name h4,
+    .user-name p {
+        margin: 0;
+        text-align: left !important;
+    }
+
+    .user-name p {
+        font-size: 14px;
+    }
+
+    .user-links {
+        padding-top: 3rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .user-links a {
+        text-align: left;
+        padding: .75rem 1rem;
+        margin: 0 .5rem;
+        border-bottom: 1px solid #dbdbdb;
+        text-decoration: none;
+        color: #434343;
+    }
+
+    .logoutBtn {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        margin: 3rem 1rem;
+        border: 0;
+        background-color: transparent;
+        color: #434343;
+    }
+
+    .user-links a:hover,
+    .logoutBtn:hover {
+        color: black;
+        cursor: pointer;
+    }
+}

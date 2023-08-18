@@ -6,6 +6,10 @@
 
 }
 
+.saftey-tips h5 {
+    text-align: center;
+}
+
 .saftey-tip-card {
     background-color: #f9f9f9;
     margin: .5rem;

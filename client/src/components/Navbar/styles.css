@@ -1,3 +1,19 @@
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    /* Change the color as needed */
+}
+
+input:focus {
+    outline: none;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
 .Navbar {
     padding: 1rem;
     box-shadow: 0 0 10px #00000029;
@@ -26,18 +42,38 @@
 
 .login-form {
     display: none;
-    position: absolute;
-    right: 0;
-    margin-right: 3rem;
-    padding: 1.5rem;
-    box-shadow: 0 0 10px #00000029;
-    background-color: white;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: #000000e0;
+}
+
+.login-form-show {
+    opacity: 1;
+    z-index: 1;
+    transition: opacity 0.2s ease-in-out, z-index 0.1s linear;
+}
+
+.login-form-hide {
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.2s ease-in-out, z-index 0.1s linear 0.1s;
+}
+
+.slideUserNavbar {
+    width: 100%;
+}
+
+.hideSlideUserNavbar {
+    width: 0;
 }
 
 .mobile-form {
     display: flex;
     flex-direction: column;
-    padding: .5rem 3rem 0 3rem;
+    padding: .5rem;
 }
 
 .mobile-form input {
