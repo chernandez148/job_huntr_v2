@@ -63,3 +63,17 @@
 .bookmark-icon:hover {
     cursor: pointer;
 }
+
+.showAllBtn {
+    background-color: transparent;
+    display: flex;
+    border: 0;
+    padding-top: 1rem;
+    margin: 0 auto;
+    color: #292929;
+}
+
+.showAllBtn:hover {
+    color: black;
+    text-decoration: underline;
+}

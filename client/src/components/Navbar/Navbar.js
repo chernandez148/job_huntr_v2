@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setLoginForm } from '../../redux/slices/loginForm';
 import { setSearchedJobData } from '../../redux/slices/searchedJobData';
 import { setIsLoading } from '../../redux/slices/isLoading';
+import { setRecentSearchesData } from '../../redux/slices/recentSearchesData';
 import { CgMenuRight } from 'react-icons/cg';
 import { MdLocationPin } from 'react-icons/md';
 import { GrFormSearch } from 'react-icons/gr';
@@ -20,6 +21,7 @@ import './styles.css';
 
 function Navbar() {
     const [mobileOptions, setMobileOptions] = useState(false)
+    const recentSearchesData = useSelector(state => state.recentSearchesData.recentSearchesData);
     const loginForm = useSelector(state => state.loginForm.loginForm);
     const user = useSelector(state => state.user.user);
     const dispatch = useDispatch()
@@ -52,7 +54,7 @@ function Navbar() {
 
             if (response.ok) {
                 const recentSearch = await response.json();
-                console.log(recentSearch);
+                dispatch(setRecentSearchesData([...recentSearchesData, recentSearch]))
             } else {
                 console.error("Failed to add job to favorites.");
             }

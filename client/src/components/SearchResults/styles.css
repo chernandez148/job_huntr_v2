@@ -84,7 +84,6 @@
     position: sticky;
     top: 0;
     height: 100%;
-    overflow-y: scroll;
 }
 
 .searched-info h3,
@@ -130,6 +129,23 @@
     display: flex;
 }
 
+.d-none {
+    display: none;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.closeBtn {
+    border: 0;
+    background-color: transparent;
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    padding: 0 1rem;
+}
+
 @media screen and (min-width: 1000px) {
     .SearchResults {
         width: 950px !important;
@@ -137,6 +153,22 @@
 }
 
 @media screen and (min-width: 700px) {
+    .searched-info {
+        overflow-y: scroll;
+    }
+
+    .d-none {
+        display: flex;
+    }
+
+    .d-flex {
+        display: flex;
+    }
+
+    .closeBtn {
+        display: none;
+    }
+
     .SearchResults {
         width: 98%;
         margin: 0 auto;

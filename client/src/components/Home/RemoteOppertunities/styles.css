@@ -27,8 +27,6 @@
     padding: 1rem 0;
 }
 
-
-
 .job-title {
     padding: 0 !important;
     font-weight: 600;
@@ -62,4 +60,18 @@
 
 .bookmark-icon:hover {
     cursor: pointer;
+}
+
+.showAllBtn {
+    background-color: transparent;
+    display: flex;
+    border: 0;
+    padding-top: 1rem;
+    margin: 0 auto;
+    color: #292929;
+}
+
+.showAllBtn:hover {
+    color: black;
+    text-decoration: underline;
 }

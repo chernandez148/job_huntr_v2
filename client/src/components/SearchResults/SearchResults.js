@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { setSliceIndex } from '../../redux/slices/sliceIndex';
 import { setSelectedIndex } from '../../redux/slices/selectedIndex';
 import { setNewFavoriteJobData } from '../../redux/slices/newFavoriteJobData'
+import { setToggleDisplayCard } from '../../redux/slices/toggleDisplayCard';
 import { BsBookmark, BsBookmarkFill } from 'react-icons/bs';
 import { PiSuitcaseSimpleLight } from 'react-icons/pi';
 import './styles.css';
@@ -14,9 +15,12 @@ function SearchResults() {
     const newFavoriteJobData = useSelector(state => state.newFavoriteJobData.newFavoriteJobData);
     const sliceIndex = useSelector(state => state.sliceIndex.sliceIndex);
     const selectedIndex = useSelector(state => state.selectedIndex.selectedIndex);
+    const toggleDisplayCard = useSelector(state => state.toggleDisplayCard.toggleDisplayCard);
     const user = useSelector(state => state.user.user);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    console.log(toggleDisplayCard)
 
     const slicedSearchedJobData = searchedJobData?.data?.slice(0, sliceIndex);
 
@@ -32,6 +36,12 @@ function SearchResults() {
 
     const handleSelectedIndex = (index) => {
         dispatch(setSelectedIndex(index));
+        dispatch(setToggleDisplayCard(false))
+    }
+
+    const handleCloseInfo = () => {
+        dispatch(setToggleDisplayCard(true))
+
     }
 
     const selectedJobTitle = selectedIndex !== null && slicedSearchedJobData && slicedSearchedJobData[selectedIndex]
@@ -121,9 +131,13 @@ function SearchResults() {
         }
     };
 
+    const toggleDisplay = toggleDisplayCard ? "d-flex" : 'd-none'
+
+    const toggleReverseDisplay = toggleDisplayCard ? "d-none" : "d-flex"
+
     return (
         <div className='SearchResults'>
-            <div className='search-results'>
+            <div className={`search-results ${toggleDisplay}`}>
                 {/* Mapping through each job and rendering job cards */}
                 {slicedSearchedJobData?.map((jobInfo, index) => {
                     const isJobFavorited =
@@ -140,7 +154,7 @@ function SearchResults() {
                             <div className='search-job-card-wrapper'>
                                 <h4>{jobInfo.job_title}</h4>
                                 <p className='employer-name'>{jobInfo.employer_name}</p>
-                                <p>{jobInfo.job_city}, {jobInfo.job_state}</p>
+                                {jobInfo.job_city && jobInfo.job_state ? <p className='job-city'>{jobInfo.job_city}, {jobInfo.job_state}</p> : <p className='job-city'>{jobInfo.job_is_remote ? "Remote" : "Undisclosed"}</p>}
                                 {jobInfo.job_min_salary && jobInfo.job_max_salary ? (
                                     <p className='job_salary'>${jobInfo.job_min_salary} - ${jobInfo.job_max_salary}</p>
                                 ) : (
@@ -157,9 +171,10 @@ function SearchResults() {
                     Load More
                 </button>
             </div>
-            <div className='searched-job-details'>
+            <div className={`searched-job-details ${toggleReverseDisplay}`}>
                 <div className='searched-job-details-wrapper'>
                     <div className='searched-info'>
+                        <button className='closeBtn' onClick={handleCloseInfo}>X</button>
                         <div className='wrapper-info'>
                             <h3>{selectedJobTitle}</h3>
                             <button onClick={handleFavorites} className='bookmark-btn'>
@@ -167,7 +182,9 @@ function SearchResults() {
                             </button>
                         </div>
                         <h5 className='selected-employer'>{selectedEmployer}</h5>
-                        <h5>{selectedJobCity}, {selectedJobState}</h5>
+                        <h5>
+                            {selectedJobCity && selectedJobState ? `${selectedJobCity}, ${selectedJobState}` : "Remote"}
+                        </h5>
                         {selectedJobMinSalary && selectedJobMaxSalary ? (
                             <h5>${selectedJobMinSalary} - ${selectedJobMaxSalary}</h5>
                         ) : (

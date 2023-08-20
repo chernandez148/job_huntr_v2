@@ -14,6 +14,8 @@ import sliceIndexReducer from './slices/sliceIndex';
 import selectedIndexReducer from './slices/selectedIndex';
 import buttonDisabledReducer from './slices/buttonDisabled';
 import isLoadingReducer from './slices/isLoading';
+import toggleDisplayCardReducer from './slices/toggleDisplayCard';
+import recentSearchesDataReducer from './slices/recentSearchesData';
 
 export const store = configureStore({
     reducer: {
@@ -30,6 +32,8 @@ export const store = configureStore({
         favoriteJobData: favoriteJobDataReducer,
         newFavoriteJobData: newFavoriteJobDataReducer,
         buttonDisabled: buttonDisabledReducer,
-        isLoading: isLoadingReducer
+        isLoading: isLoadingReducer,
+        toggleDisplayCard: toggleDisplayCardReducer,
+        recentSearchesData: recentSearchesDataReducer
     }
 });

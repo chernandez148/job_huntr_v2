@@ -2,14 +2,20 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { setNewFavoriteJobData } from '../../../redux/slices/newFavoriteJobData';
+import { setIsLoading } from '../../../redux/slices/isLoading';
+import { setSearchedJobData } from '../../../redux/slices/searchedJobData';
 import { BsBookmark, BsBookmarkFill } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './styles.css';
 
 function NearbyJobs() {
     const jobData = useSelector(state => state.jobData.jobData);
+    const locationData = useSelector(state => state.locationData.locationData);
     const newFavoriteJobData = useSelector(state => state.newFavoriteJobData.newFavoriteJobData);
     const user = useSelector(state => state.user.user);
     const dispatch = useDispatch();
+    const navigate = useNavigate()
 
     const slicedJobData = jobData?.data?.slice(0, 4); // Slice the first 4 indexes
 
@@ -70,6 +76,34 @@ function NearbyJobs() {
                 newFavoriteJobData?.some(newItem => newItem.job_id === jobId));
     };
 
+    const handleNearbySearch = async (jobInfo) => {
+        dispatch(setIsLoading(true))
+        if (jobInfo) {
+            const options = {
+                method: "GET",
+                url: "https://jsearch.p.rapidapi.com/search",
+                params: {
+                    query: `Jobs in ${locationData}, USA`,
+                },
+                headers: {
+                    'X-RapidAPI-Key': 'KJwZZIJSFimshuivMSVGaiYzkRomp15f2vKjsnK4bKzuUzVLzA',
+                    'X-RapidAPI-Host': 'jsearch.p.rapidapi.com',
+                },
+            }
+            try {
+                const response = await axios.request(options);
+                dispatch(setSearchedJobData(response.data))
+                dispatch(setIsLoading(false))
+                console.log(false)
+                navigate('/search_results')
+            } catch (error) {
+                console.error(error)
+            }
+        } else {
+            console.log('Please enter both job search and location.');
+        }
+    }
+
     return (
         <div className='NearbyJobs'>
             {slicedJobData && slicedJobData.map((jobInfo, id) => (
@@ -85,7 +119,7 @@ function NearbyJobs() {
                     </button>
                 </div>
             ))}
-            <a href="#">Show all</a>
+            <button className='showAllBtn' onClick={handleNearbySearch}>Show all</button>
         </div>
     );
 }

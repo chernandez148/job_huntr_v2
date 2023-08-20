@@ -6,3 +6,23 @@
     font-weight: 400;
     margin: 0;
 }
+
+.recent-search-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+.recent-search-card:hover {
+    cursor: pointer;
+}
+
+.recent-search-card:first-child {
+    border-top: 1px solid #e3e3e3;
+}
+
+.location {
+    font-size: 14px;
+    color: #4F4F4F;
+}
